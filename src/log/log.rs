@@ -1,5 +1,4 @@
 use std::cell::RefCell;
-use std::fs::read_dir;
 use std::io;
 use std::io::{Error, ErrorKind};
 use std::path::Path;
@@ -13,7 +12,7 @@ struct Log<'a> {
     config: Config
 }
 
-impl Log {
+impl Log<'_> {
 
     fn new(dir: String, mut c: Config) -> io::Result<Self> {
 
@@ -44,25 +43,6 @@ impl Log {
         if !path.is_dir() {
             return Err(Error::new(ErrorKind::NotFound, "Expected directory, but it was a file"));
         }
-
-        let _ = read_dir(path)?
-            .filter(|d| d.is_ok())
-            .map(|d| d.unwrap())
-            .map(|d| d.path())
-            .filter(|d| {
-                d.ends_with(".store")
-            })
-            .map(|f| {
-                let arr: Vec<&str> = f.to_str().unwrap().split(".").collect();
-                return arr.get(0);
-            }
-
-            )
-            .map(|s| {});
-
-
-
-
 
         Ok(())
     }
