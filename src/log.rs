@@ -1,5 +1,12 @@
+mod store;
+mod index;
+mod segment;
+mod config;
+mod log;
+
 use std::sync::{Arc, RwLock};
 use serde::{Deserialize, Serialize};
+use crate::dto::record::Record;
 
 pub struct Log {
     records: Arc<RwLock<Vec<Record>>>
@@ -32,22 +39,6 @@ impl Log {
 
 }
 
-
-#[derive(Debug, Serialize, Clone, Deserialize)]
-pub struct Record {
-    pub offset: u64,
-    pub value: Vec<u8>
-}
-
-
-impl Record {
-    pub fn new(offset: u64, data: Vec<u8>) -> Self {
-        Record {
-            offset,
-            value:data
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {

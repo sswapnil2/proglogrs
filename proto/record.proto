@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package record;
+
+message Record {
+  uint64 offset = 1;
+  bytes value = 2;
+}
